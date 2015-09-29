@@ -16,7 +16,11 @@ function RepeatController(){
   this.name = "My Cart!";
   
   this.getCartCount = function(){
-    return this.cart.length;
+    var runningCount=0;
+    this.cart.forEach(function(item){
+      runningCount += item.quantity;
+    })
+    return runningCount;
   };
   
   /*
@@ -26,9 +30,11 @@ function RepeatController(){
   * of each item that is in our cart
   */ 
   this.calculateCartTotal = function() {
+         var runningTotal = 0;
          this.cart.forEach(function(item){
-            this.total += item;
-         })
+           runningTotal += item.quantity * item.price;
+         });
+         return runningTotal;
   };
   
   this.removeItemFromCart = function(item){
@@ -39,6 +45,9 @@ function RepeatController(){
     * in item is in the array. Then you will need to use the correct
     * Array.method to remove 1 item hint method(i, 1);
     */
+      var index = this.cart.indexOf(item);
+      this.cart.splice(index, 1);
+      // console.log(this.cart);
   };
   
   this.addItemToCart = function(item){
